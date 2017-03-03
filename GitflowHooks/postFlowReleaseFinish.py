@@ -18,8 +18,8 @@ def main():
 	with open(versionFile, 'w') as buildVersionFile:
 		buildVersionFile.write(nextVersion)
 		
-	print ('calling commitBuildVersionChanges')
 	commitBuildVersionChanges(repoPath, 'Auto-increment version as part of finishing a release branch');
+	print ('Build version changes commited')
 	
 	return	
 	
@@ -33,30 +33,27 @@ def incrementVersionPostRelease(currentVersion):
 	
 def commitBuildVersionChanges(repoPath, commitMessage):
 	
-	print ('Stage')
 	cmd = ['git', 'stage', '*']
-	p = subprocess.Popen(cmd, cwd=repoPath)
+	p = subprocess.Popen(cmd, cwd=repoPath, stdout=subprocess.PIPE)
 	result = p.wait()
+	print p.stdout.read();
 	
-	print ('result: {0}').format(result)
 	if result != 0:
 		raise Exception('stage call failed')
 	
-	print ('Commit')
 	cmd = ['git', 'commit', '-m', commitMessage]
-	p = subprocess.Popen(cmd, cwd=repoPath)
+	p = subprocess.Popen(cmd, cwd=repoPath, stdout=subprocess.PIPE)
 	result = p.wait()
+	print p.stdout.read();
 	
-	print ('result: {0}').format(result)
 	if result != 0:
 		raise Exception('commit failed')
 	
-	print ('Push')
 	cmd = ['git', 'push']
-	p = subprocess.Popen(cmd, cwd=repoPath)
+	p = subprocess.Popen(cmd, cwd=repoPath, stdout=subprocess.PIPE)
 	result = p.wait()
+	print p.stdout.read();
 	
-	print ('result: {0}').format(result)
 	if result != 0:
 		raise Exception('push failed')
 	
