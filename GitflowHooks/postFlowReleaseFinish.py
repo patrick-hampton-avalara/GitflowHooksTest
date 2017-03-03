@@ -4,9 +4,9 @@ import sys
 import subprocess
 
 def main():
+	#This script needs to be called with the path to the repose that is having it's release finished
 	repoPath = sys.argv[1]
 	versionFile = repoPath + '/BuildVersion/mylodge-version.txt'
-	print 'versionFile: {0}'.format(versionFile)
 	buildVersion = ''
 	with open(versionFile, 'r') as buildVersionFile:
 		buildVersion = buildVersionFile.readline().strip('\n')
@@ -17,9 +17,10 @@ def main():
 
 	with open(versionFile, 'w') as buildVersionFile:
 		buildVersionFile.write(nextVersion)
-		
-	commitBuildVersionChanges(repoPath, 'Auto-increment version as part of finishing a release branch');
-	print ('Build version changes commited')
+	
+	print ('Pushing version changes to the remote server')	
+	commitAndPushBuildVersionChanges(repoPath, versionFile, 'Auto-increment version as part of finishing a release branch');
+	print ('Build version changes have been pushed!')
 	
 	return	
 	
@@ -31,10 +32,11 @@ def incrementVersionPostRelease(currentVersion):
 	nextReleaseVersion = '{0}.{1}.{2}.{3}\n'.format(versionParts[0], versionParts[1], versionParts[2], versionParts[3])
 	return nextReleaseVersion
 	
-def commitBuildVersionChanges(repoPath, commitMessage):
+def commitAndPushBuildVersionChanges(repoPath, versionFile, commitMessage):
 	
+	print ('Version File: {0}').format(versionFile)
 	print ('Staging modified files')
-	cmd = ['git', 'stage', '*']
+	cmd = ['git', 'add', versionFile]
 	p = subprocess.Popen(cmd, cwd=repoPath, stdout=subprocess.PIPE)
 	result = p.wait()
 	print p.stdout.read();
