@@ -33,6 +33,7 @@ def incrementVersionPostRelease(currentVersion):
 	
 def commitBuildVersionChanges(repoPath, commitMessage):
 	
+	print ('Staging modified files')
 	cmd = ['git', 'stage', '*']
 	p = subprocess.Popen(cmd, cwd=repoPath, stdout=subprocess.PIPE)
 	result = p.wait()
@@ -41,6 +42,7 @@ def commitBuildVersionChanges(repoPath, commitMessage):
 	if result != 0:
 		raise Exception('stage call failed')
 	
+	print ('Commiting staged changes')
 	cmd = ['git', 'commit', '-m', commitMessage]
 	p = subprocess.Popen(cmd, cwd=repoPath, stdout=subprocess.PIPE)
 	result = p.wait()
@@ -49,6 +51,7 @@ def commitBuildVersionChanges(repoPath, commitMessage):
 	if result != 0:
 		raise Exception('commit failed')
 	
+	print ('Pushing to origin')
 	cmd = ['git', 'push']
 	p = subprocess.Popen(cmd, cwd=repoPath, stdout=subprocess.PIPE)
 	result = p.wait()
