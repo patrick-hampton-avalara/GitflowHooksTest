@@ -4,8 +4,6 @@ import sys
 import subprocess
 
 def main():
-
-	
 	print('Updating the Build Version file for the new hotfix branch')
 
 	#This script needs to be called with the path to the repose that is having it's release finished
@@ -17,7 +15,7 @@ def main():
 		buildVersion = buildVersionFile.readline().strip('\n')
 
 	print ('-Current build version: {0}'.format(buildVersion))
-	nextVersion = incrementVersionPostRelease(buildVersion)
+	nextVersion = incrementVersionForHotfix(buildVersion)
 	print ('-Build version incremented to: {0}'.format(nextVersion))
 
 	with open(versionFile, 'w') as buildVersionFile:
@@ -29,7 +27,7 @@ def main():
 	
 	return	
 	
-def incrementVersionPostRelease(currentVersion):
+def incrementVersionForHotfix(currentVersion):
 	versionParts = map(int, currentVersion.split("."))
 	versionParts[2] += 1
 	versionParts[3] = 0
@@ -37,7 +35,6 @@ def incrementVersionPostRelease(currentVersion):
 	return nextReleaseVersion
 	
 def commitBuildVersionChanges(repoPath, versionFile, commitMessage):
-	
 	print ('-Staging modified files')
 	cmd = ['git', 'add', versionFile]
 	p = subprocess.Popen(cmd, cwd=repoPath, stdout=subprocess.PIPE)

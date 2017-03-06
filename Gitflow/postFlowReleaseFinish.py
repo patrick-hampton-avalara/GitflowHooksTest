@@ -34,7 +34,6 @@ def incrementVersionPostRelease(currentVersion):
 	return nextReleaseVersion
 	
 def commitBuildVersionChanges(repoPath, versionFile, commitMessage):
-	
 	print ('-Staging modified files')
 	cmd = ['git', 'add', versionFile]
 	p = subprocess.Popen(cmd, cwd=repoPath, stdout=subprocess.PIPE)
