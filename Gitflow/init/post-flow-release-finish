@@ -1,0 +1,33 @@
+#!/bin/sh
+#
+# Runs at the end of git flow feature start
+#
+# Positional arguments:
+# $1    The friendly name of the branch
+# $2    The origin remote
+# $3    The full branch name (including the feature prefix)
+# $4    The base from which this feature is started
+#
+# The following variables are available as they are exported by git-flow:
+#
+# MASTER_BRANCH - The branch defined as Master
+# DEVELOP_BRANCH - The branch defined as Develop
+#
+NAME=$1
+ORIGIN=$2
+BRANCH=$3
+BASE=$4
+
+# Implement your script here.
+
+#echo "Hello world"
+echo "HAL, I won't argue with you anymore! Open the doors!"
+
+BASEDIR=$(dirname "$0")
+script_path=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd -P )
+repo_path=$(dirname $(dirname $script_path))
+echo script_path: $script_path
+echo repo_path: $repo_path
+python $repo_path/Gitflow/postFlowReleaseFinish.py $repo_path
+
+exit 0

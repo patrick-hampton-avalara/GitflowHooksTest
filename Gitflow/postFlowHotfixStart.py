@@ -4,9 +4,12 @@ import sys
 import subprocess
 
 def main():
+
+	print('Updating the Build Version file in develop branch in preparation for next release')
+
 	#This script needs to be called with the path to the repose that is having it's release finished
-	print('Updating the Build Version file for the new hotfix branch')
 	repoPath = sys.argv[1]
+	
 	versionFile = repoPath + '/BuildVersion/mylodge-version.txt'
 	buildVersion = ''
 	with open(versionFile, 'r') as buildVersionFile:
@@ -19,7 +22,7 @@ def main():
 	with open(versionFile, 'w') as buildVersionFile:
 		buildVersionFile.write(nextVersion)
 	
-	print ('-Comming version changes to local repo')	
+	print ('-Comming version changes to local repo')		
 	commitBuildVersionChanges(repoPath, versionFile, 'Auto-increment version as part of finishing a release branch');
 	print ('-Build version changes have been commited')
 	
@@ -27,8 +30,7 @@ def main():
 	
 def incrementVersionPostRelease(currentVersion):
 	versionParts = map(int, currentVersion.split("."))
-	versionParts[1] += 1
-	versionParts[2] = 0
+	versionParts[2] += 1
 	versionParts[3] = 0
 	nextReleaseVersion = '{0}.{1}.{2}.{3}\n'.format(versionParts[0], versionParts[1], versionParts[2], versionParts[3])
 	return nextReleaseVersion
