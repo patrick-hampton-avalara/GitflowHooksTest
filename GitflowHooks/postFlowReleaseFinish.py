@@ -18,9 +18,9 @@ def main():
 	with open(versionFile, 'w') as buildVersionFile:
 		buildVersionFile.write(nextVersion)
 	
-	print ('Pushing version changes to the remote server')	
-	commitAndPushBuildVersionChanges(repoPath, versionFile, 'Auto-increment version as part of finishing a release branch');
-	print ('Build version changes have been pushed!')
+	print ('Comming version changes to local repo')	
+	commitBuildVersionChanges(repoPath, versionFile, 'Auto-increment version as part of finishing a release branch');
+	print ('Build version changes have been commited')
 	
 	return	
 	
@@ -32,7 +32,7 @@ def incrementVersionPostRelease(currentVersion):
 	nextReleaseVersion = '{0}.{1}.{2}.{3}\n'.format(versionParts[0], versionParts[1], versionParts[2], versionParts[3])
 	return nextReleaseVersion
 	
-def commitAndPushBuildVersionChanges(repoPath, versionFile, commitMessage):
+def commitBuildVersionChanges(repoPath, versionFile, commitMessage):
 	
 	print ('Version File: {0}').format(versionFile)
 	print ('Staging modified files')
@@ -52,15 +52,6 @@ def commitAndPushBuildVersionChanges(repoPath, versionFile, commitMessage):
 	
 	if result != 0:
 		raise Exception('commit failed')
-	
-	print ('Pushing to origin')
-	cmd = ['git', 'push']
-	p = subprocess.Popen(cmd, cwd=repoPath, stdout=subprocess.PIPE)
-	result = p.wait()
-	print p.stdout.read();
-	
-	if result != 0:
-		raise Exception('push failed')
 	
 	
 if __name__ == "__main__":
