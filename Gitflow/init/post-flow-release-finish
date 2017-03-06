@@ -19,15 +19,8 @@ BRANCH=$3
 BASE=$4
 
 # Implement your script here.
-
-#echo "Hello world"
-echo "HAL, I won't argue with you anymore! Open the doors!"
-
-BASEDIR=$(dirname "$0")
 script_path=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd -P )
 repo_path=$(dirname $(dirname $script_path))
-echo script_path: $script_path
-echo repo_path: $repo_path
 python $repo_path/Gitflow/postFlowReleaseFinish.py $repo_path
 
 exit 0

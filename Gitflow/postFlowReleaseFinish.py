@@ -5,7 +5,7 @@ import subprocess
 
 def main():
 	#This script needs to be called with the path to the repose that is having it's release finished
-	print('Updating the Build Version file for the new hotfix branch')
+	print('Updating the Build Version file in develop branch in preparation for next release')
 	repoPath = sys.argv[1]
 	versionFile = repoPath + '/BuildVersion/mylodge-version.txt'
 	buildVersion = ''
