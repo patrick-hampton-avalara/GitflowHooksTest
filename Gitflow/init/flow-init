@@ -1,0 +1,9 @@
+#!/bin/sh
+
+echo 'copying git flow hook scripts to .git\hooks'
+cp ./post-flow-hotfix-start ../../.git/hooks/.
+cp ./post-flow-release-finish ../../.git/hooks/.
+
+echo 'initializing repo for git flow'
+cd ../..
+git flow init
