@@ -6,7 +6,7 @@ import subprocess
 def main():
 	print('Updating the Build Version file for the new hotfix branch')
 
-	#This script needs to be called with the path to the repose that is having it's release finished
+	#This script needs to be called with the path to the repose that is having it hotfix started
 	repoPath = sys.argv[1]
 	
 	versionFile = repoPath + '/BuildVersion/mylodge-version.txt'
@@ -22,7 +22,7 @@ def main():
 		buildVersionFile.write(nextVersion)
 	
 	print ('-Comming version changes to local repo')		
-	commitBuildVersionChanges(repoPath, versionFile, 'Auto-increment version as part of finishing a release branch');
+	commitBuildVersionChanges(repoPath, versionFile, 'Auto-increment version as part of starting a hotfix branch');
 	print ('-Build version changes have been commited')
 	
 	return	
